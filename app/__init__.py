@@ -70,4 +70,5 @@ def get_time_line_post():
 
 @app.route("/timeline")
 def timeline():
-    return render_template("timeline.html", title="Timeline")
+    template_data = get_time_line_post()
+    return render_template("timeline.html", data=template_data)

@@ -1,0 +1,46 @@
+<form id="form">
+
+    <label>Full Name</label>
+    <input type="text" name="name">
+
+    <label>Email</label>
+    <input type="email" name="email">
+
+    <label>Content</label>
+    <textarea name="content" cols="30" rows="10"></textarea>
+
+    <button type="submit"></button>
+</form>
+
+<div>
+    {% for x in data.timeline_posts %}
+    <div class="card border-none text-center shadow-lg mb-5" id="mytimeline">
+        <p class="card-text m-2"><span class="text-danger">Name:</span> {{x['name']}}</p>
+        <p class="card-text m-2"><span class="text-danger">Email:</span> {{x['email']}}</p>
+        <p class="card-text m-2"><span class="text-danger">Content:</span> {{x['content']}}</p>
+        <p class="card-text m-2"><span class="text-danger">Created At:</span> {{x['created_at']}}</p>
+        <p class="card-text m-2"><span class="text-danger">Id:</span> {{x['id']}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const prePayload = new FormData(form);
+        const payload = new URLSearchParams(prePayload);
+
+
+        fetch('/api/timeline_post', {
+            method: "POST",
+            body: payload,
+        })
+
+            .then(() => {
+                window.location.reload();
+            })
+    })
+</script>
