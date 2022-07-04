@@ -81,9 +81,9 @@ def post_time_line_post():
     elif not content or content == '' or content is None:
         return "Invalid content", 400
 
-    else:
-        timeline_post = TimelinePost.create(name=name, email=email, content=content)
-        return model_to_dict(timeline_post)
+    
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    return model_to_dict(timeline_post)
 
 
 @app.route("/api/timeline_post", methods=["GET"])
@@ -95,6 +95,12 @@ def get_time_line_post():
         ]
     }
 
+@app.route("/api/timeline_post", methods=["DELETE"])
+def delete_time_line_post():
+    id = request.form["id"]
+    TimelinePost.delete_by_id(id)
+    return render_template("timeline.html")
+
 
 @app.route("/timeline")
 def timeline():
@@ -103,7 +109,4 @@ def timeline():
 
 
 
-@app.errorhandler(400)
-def handle_400_error(_error):
-    return make_response("Invalid content", 400)
 
