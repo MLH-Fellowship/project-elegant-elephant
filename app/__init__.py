@@ -20,9 +20,9 @@ from playhouse.shortcuts import model_to_dict
 load_dotenv()
 if os.getenv("TESTING") == "true":
     print("Running in test mode")
-    db = SqliteDatabase("file:memory?mode=memory&cache=shared", uri=True)
+    mydb = SqliteDatabase("file:memory?mode=memory&cache=shared", uri=True)
 else:
-    db = MySQLDatabase(
+    mydb = MySQLDatabase(
         os.getenv("MYSQL_DATABASE"),
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
@@ -38,11 +38,11 @@ class TimelinePost(Model):
     created_at = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
-        database = db
+        database = mydb
 
 
-db.connect()
-db.create_tables([TimelinePost])
+mydb.connect()
+mydb.create_tables([TimelinePost])
 app = Flask(name)
 
 
