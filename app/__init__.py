@@ -43,7 +43,7 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
-app = Flask(name)
+app = Flask(__name__)
 
 
 @app.route("/")
